@@ -42,10 +42,10 @@ public class StrokeFrameLayout extends FrameLayout implements IStrokeLayouts {
     private void initAttrs(AttributeSet attrs) {
         setWillNotDraw(false);
         if (attrs != null) {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.StrokeLinearLayout);
-            excludeSide = a.getInt(R.styleable.StrokeLinearLayout_exclude_side, EXCLUDE_NONE);
-            strokeWidth = a.getDimensionPixelSize(R.styleable.StrokeLinearLayout_stroke_width, 2);
-            strokeColor = a.getColor(R.styleable.StrokeLinearLayout_stroke_color, 0xFFCCCCCC);
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.StrokeFrameLayout);
+            excludeSide = a.getInt(R.styleable.StrokeFrameLayout_exclude_side, EXCLUDE_NONE);
+            strokeWidth = a.getDimensionPixelSize(R.styleable.StrokeFrameLayout_stroke_width, 2);
+            strokeColor = a.getColor(R.styleable.StrokeFrameLayout_stroke_color, 0xFFCCCCCC);
             a.recycle();
         } else {
             excludeSide = EXCLUDE_NONE;
@@ -64,180 +64,46 @@ public class StrokeFrameLayout extends FrameLayout implements IStrokeLayouts {
     protected void onDraw(Canvas canvas) {
         if (excludeSide != EXCLUDE_ALL) {
             canvas.getClipBounds(mDrawRect);
-            mPath = calculatePath(mDrawRect);
+            mPath = PathHelper.calculatePath(this, mPath, mDrawRect, excludeSide);
             canvas.drawPath(mPath, strokePaint);
         }
         super.onDraw(canvas);
     }
 
-    /**
-     * point0                  point1
-     * ----------------------
-     * \                       \
-     * \                       \
-     * \                       \
-     * ----------------------
-     * point3                 point2
-     */
-    private Path calculatePath(Rect drawRect) {
-        mPath.reset();
+    @Override
+    public void setExcludeSide(int excludeSide) {
+        this.excludeSide = excludeSide;
+        postInvalidate();
+    }
 
-        float point0X = getPaddingLeft();
-        float point0Y = getPaddingTop();
+    @Override
+    public int getExcludeSide() {
+        return excludeSide;
+    }
 
-        float point1X = getWidth() - getPaddingRight();
-        float point1Y = point0Y;
-
-        float point2X = point1X;
-        float point2Y = getHeight() - getPaddingBottom();
-
-        float point3X = point0X;
-        float point3Y = point2Y;
-
-        if (drawRect != null && !drawRect.isEmpty()) {
-            point0X = drawRect.left;
-            point0Y = drawRect.top;
-
-            point1X = drawRect.right;
-            point1Y = point0Y;
-
-            point2X = point1X;
-            point2Y = drawRect.bottom;
-
-            point3X = point0X;
-            point3Y = point2Y;
+    @Override
+    public void setStrokeWidth(float strokeWidth) {
+        if (strokePaint != null) {
+            strokePaint.setStrokeWidth(strokeWidth);
         }
+        postInvalidate();
+    }
 
-        switch (excludeSide) {
-            case EXCLUDE_LEFT:
-                /**
-                 *  ---
-                 *     \
-                 *  ---
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point1X, point1Y);
-                mPath.lineTo(point2X, point2Y);
-                mPath.lineTo(point3X, point3Y);
-                break;
-            case EXCLUDE_TOP:
-                /**
-                 * \   \
-                 *  ---
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point3X, point3Y);
-                mPath.lineTo(point2X, point2Y);
-                mPath.lineTo(point1X, point1Y);
-                break;
-            case EXCLUDE_RIGHT:
-                /**
-                 *  ---
-                 * \
-                 *  ---
-                 */
-                mPath.moveTo(point1X, point1Y);
-                mPath.lineTo(point0X, point0Y);
-                mPath.lineTo(point3X, point3Y);
-                mPath.lineTo(point2X, point2Y);
-                break;
-            case EXCLUDE_BOTTOM:
-                /**
-                 *   ---
-                 *  \   \
-                 */
-                mPath.moveTo(point3X, point3Y);
-                mPath.lineTo(point0X, point0Y);
-                mPath.lineTo(point1X, point1Y);
-                mPath.lineTo(point2X, point2Y);
-                break;
-            case EXCLUDE_LEFT + EXCLUDE_TOP:
-                /**
-                 *    \
-                 * ---
-                 */
-                mPath.moveTo(point1X, point1Y);
-                mPath.lineTo(point2X, point2Y);
-                mPath.lineTo(point3X, point3Y);
-                break;
-            case EXCLUDE_LEFT + EXCLUDE_TOP + EXCLUDE_RIGHT:
-                /**
-                 *
-                 * ---
-                 */
-                mPath.moveTo(point2X, point2Y);
-                mPath.lineTo(point3X, point3Y);
-                break;
-            case EXCLUDE_LEFT + EXCLUDE_BOTTOM:
-                /**
-                 *  ---
-                 *     \
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point1X, point1Y);
-                mPath.lineTo(point2X, point2Y);
-                break;
-            case EXCLUDE_LEFT + EXCLUDE_BOTTOM + EXCLUDE_RIGHT:
-                /**
-                 *  ---
-                 *
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point1X, point1Y);
-                break;
-            case EXCLUDE_TOP + EXCLUDE_BOTTOM:
-                /**
-                 *  \   \
-                 */
-                mPath.moveTo(point0X, point1Y);
-                mPath.lineTo(point3X, point3Y);
-                mPath.moveTo(point1X, point1Y);
-                mPath.lineTo(point2X, point2Y);
-                break;
-            case EXCLUDE_RIGHT + EXCLUDE_TOP:
-                /**
-                 * \
-                 *  ---
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point3X, point3Y);
-                mPath.lineTo(point2X, point2Y);
-                break;
-            case EXCLUDE_RIGHT + EXCLUDE_BOTTOM:
-                /**
-                 *   ---
-                 *  \
-                 */
-                mPath.moveTo(point1X, point1Y);
-                mPath.lineTo(point0X, point0Y);
-                mPath.lineTo(point3X, point3Y);
-                break;
-            case EXCLUDE_RIGHT + EXCLUDE_TOP + EXCLUDE_BOTTOM:
-                /**
-                 * \
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point3X, point3Y);
-                break;
-            case EXCLUDE_LEFT + EXCLUDE_RIGHT:
-                /**
-                 *  ---
-                 *  ---
-                 */
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point1X, point1Y);
-                mPath.moveTo(point3X, point3Y);
-                mPath.lineTo(point2X, point2Y);
-                break;
-            case EXCLUDE_NONE:
-            default:
-                mPath.moveTo(point0X, point0Y);
-                mPath.lineTo(point1X, point1Y);
-                mPath.lineTo(point2X, point2Y);
-                mPath.lineTo(point3X, point3Y);
-                mPath.lineTo(point0X, point0Y);
-                break;
+    @Override
+    public float getStrokeWidth() {
+        return strokePaint == null ? 0 : strokePaint.getStrokeWidth();
+    }
+
+    @Override
+    public void setStrokeColor(int strokeColor) {
+        if (strokePaint != null) {
+            strokePaint.setColor(strokeColor);
         }
-        return mPath;
+        postInvalidate();
+    }
+
+    @Override
+    public int getStrokeColor() {
+        return strokePaint == null ? 0 : strokePaint.getColor();
     }
 }

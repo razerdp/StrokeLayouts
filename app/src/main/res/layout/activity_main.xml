@@ -1,19 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.razerdp.strokelayouts.MainActivity">
+    android:orientation="vertical"
+    >
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/check_exclude_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EXCLUDE_LEFT"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/check_exclude_top"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EXCLUDE_TOP"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/check_exclude_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EXCLUDE_RIGHT"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/check_exclude_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EXCLUDE_BOTTOM"/>
+
+    </LinearLayout>
+
+    <com.razerdp.widgets.StrokeRelativeLayout
+        android:id="@+id/rl_stroke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:padding="16dp"
+        app:stroke_color="@android:color/holo_red_light"
+        app:stroke_width="5dp"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StrokeRelativeLayout"
+            />
+
+    </com.razerdp.widgets.StrokeRelativeLayout>
+
+    <com.razerdp.widgets.StrokeLinearLayout
+        android:id="@+id/ll_stroke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:padding="16dp"
+        app:stroke_color="@android:color/holo_blue_light"
+        app:stroke_width="5dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StrokeLinearLayout"
+            />
+
+    </com.razerdp.widgets.StrokeLinearLayout>
+
+    <com.razerdp.widgets.StrokeFrameLayout
+        android:id="@+id/frame_stroke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:padding="16dp"
+        app:stroke_color="@android:color/holo_green_light"
+        app:stroke_width="5dp"
+        app:exclude_side="top|right|bottom"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StrokeFrameLayout"
+            />
+
+    </com.razerdp.widgets.StrokeFrameLayout>
+</LinearLayout>

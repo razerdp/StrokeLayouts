@@ -4,12 +4,24 @@
         <attr name="stroke_width" format="dimension"/>
         <attr name="stroke_color" format="color"/>
         <attr name="exclude_side">
-            <flag name="left" value="1"/>
-            <flag name="top" value="10"/>
-            <flag name="right" value="3"/>
-            <flag name="bottom" value="20"/>
-            <flag name="none" value="-1"/>
-            <flag name="all" value="-2"/>
+            <flag name="left" value="0x1000"/>
+            <flag name="top" value="0x0100"/>
+            <flag name="right" value="0x0010"/>
+            <flag name="bottom" value="0x0001"/>
+            <flag name="none" value="0"/>
+            <flag name="all" value="0x1111"/>
         </attr>
+    </declare-styleable>
+
+    <declare-styleable name="StrokeRelativeLayout">
+        <attr name="stroke_width"/>
+        <attr name="stroke_color"/>
+        <attr name="exclude_side"/>
+    </declare-styleable>
+
+    <declare-styleable name="StrokeFrameLayout">
+        <attr name="stroke_width"/>
+        <attr name="stroke_color"/>
+        <attr name="exclude_side"/>
     </declare-styleable>
 </resources>
