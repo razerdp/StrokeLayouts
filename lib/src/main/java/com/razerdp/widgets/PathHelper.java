@@ -19,9 +19,9 @@ class PathHelper {
     /**
      * point0                  point1
      * ----------------------
-     * \                       \
-     * \                       \
-     * \                       \
+     * ｜                       ｜
+     * ｜                       ｜
+     * ｜                       ｜
      * ----------------------
      * point3                 point2
      */
@@ -60,7 +60,7 @@ class PathHelper {
             case EXCLUDE_LEFT:
                 /**
                  *  ---
-                 *     \
+                 *     ｜
                  *  ---
                  */
                 mPath.moveTo(point0X, point0Y);
@@ -70,7 +70,7 @@ class PathHelper {
                 break;
             case EXCLUDE_TOP:
                 /**
-                 * \   \
+                 * ｜   ｜
                  *  ---
                  */
                 mPath.moveTo(point0X, point0Y);
@@ -81,7 +81,7 @@ class PathHelper {
             case EXCLUDE_RIGHT:
                 /**
                  *  ---
-                 * \
+                 * ｜
                  *  ---
                  */
                 mPath.moveTo(point1X, point1Y);
@@ -92,7 +92,7 @@ class PathHelper {
             case EXCLUDE_BOTTOM:
                 /**
                  *   ---
-                 *  \   \
+                 *  ｜   ｜
                  */
                 mPath.moveTo(point3X, point3Y);
                 mPath.lineTo(point0X, point0Y);
@@ -101,7 +101,7 @@ class PathHelper {
                 break;
             case EXCLUDE_LEFT | EXCLUDE_TOP:
                 /**
-                 *    \
+                 *    ｜
                  * ---
                  */
                 mPath.moveTo(point1X, point1Y);
@@ -119,7 +119,7 @@ class PathHelper {
             case EXCLUDE_LEFT | EXCLUDE_BOTTOM:
                 /**
                  *  ---
-                 *     \
+                 *     ｜
                  */
                 mPath.moveTo(point0X, point0Y);
                 mPath.lineTo(point1X, point1Y);
@@ -135,7 +135,7 @@ class PathHelper {
                 break;
             case EXCLUDE_TOP | EXCLUDE_BOTTOM:
                 /**
-                 *  \   \
+                 *  ｜   ｜
                  */
                 mPath.moveTo(point0X, point1Y);
                 mPath.lineTo(point3X, point3Y);
@@ -144,7 +144,7 @@ class PathHelper {
                 break;
             case EXCLUDE_RIGHT | EXCLUDE_TOP:
                 /**
-                 * \
+                 * ｜
                  *  ---
                  */
                 mPath.moveTo(point0X, point0Y);
@@ -154,7 +154,7 @@ class PathHelper {
             case EXCLUDE_RIGHT | EXCLUDE_BOTTOM:
                 /**
                  *   ---
-                 *  \
+                 *  ｜
                  */
                 mPath.moveTo(point1X, point1Y);
                 mPath.lineTo(point0X, point0Y);
@@ -162,14 +162,14 @@ class PathHelper {
                 break;
             case EXCLUDE_RIGHT | EXCLUDE_TOP | EXCLUDE_BOTTOM:
                 /**
-                 * \
+                 * ｜
                  */
                 mPath.moveTo(point0X, point0Y);
                 mPath.lineTo(point3X, point3Y);
                 break;
             case EXCLUDE_LEFT|EXCLUDE_TOP|EXCLUDE_BOTTOM:
                 /**
-                 *     \
+                 *     ｜
                  */
                 mPath.moveTo(point1X,point1Y);
                 mPath.lineTo(point2X,point2Y);
