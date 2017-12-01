@@ -18,11 +18,11 @@ class PathHelper {
 
     /**
      * point0                  point1
-     * ----------------------
+     *    ----------------------
      * ｜                       ｜
      * ｜                       ｜
      * ｜                       ｜
-     * ----------------------
+     *    ----------------------
      * point3                 point2
      */
     static Path calculatePath(@NonNull View view, @Nullable Path mPath, @Nullable Rect drawRect, int excludeSide) {
@@ -80,9 +80,9 @@ class PathHelper {
                 break;
             case EXCLUDE_RIGHT:
                 /**
-                 *  ---
+                 *   ---
                  * ｜
-                 *  ---
+                 *   ---
                  */
                 mPath.moveTo(point1X, point1Y);
                 mPath.lineTo(point0X, point0Y);
@@ -91,7 +91,7 @@ class PathHelper {
                 break;
             case EXCLUDE_BOTTOM:
                 /**
-                 *   ---
+                 *    ---
                  *  ｜   ｜
                  */
                 mPath.moveTo(point3X, point3Y);
@@ -153,7 +153,7 @@ class PathHelper {
                 break;
             case EXCLUDE_RIGHT | EXCLUDE_BOTTOM:
                 /**
-                 *   ---
+                 *     ---
                  *  ｜
                  */
                 mPath.moveTo(point1X, point1Y);
